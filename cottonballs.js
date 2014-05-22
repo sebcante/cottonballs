@@ -109,14 +109,19 @@
     data.results = _.shuffle(data.results);
     cb = function() {
       messageCount += passed
+      var statsLine = "Received:" + messageCount
       if (!firstReceivedAt){
         firstReceivedAt = new Date().getTime();
-      }
-      var now = new Date().getTime();
+      }else {
+        var now = new Date().getTime();
+        var duration = (now -firstReceivedAt)/1000
+        var rate = parseInt(messageCount/duration,10)
+        var reqPerSec = parseInt(rate/1000,10)
 
-      var duration = (now -firstReceivedAt)/1000
-      var rate = parseInt(messageCount/duration,10)
-      console.log("received:" + messageCount+ " rate: " +rate+" tokens per sec  ---- duration:" + duration);
+        statsLine +=  " "+ reqPerSec+" req/s  rate: " +rate+" tokens per sec  ---- duration:" + duration
+
+      }
+      console.log(statsLine);
       //trace(x, "Sending out data.");
       return res.send(data);
     };
