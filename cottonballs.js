@@ -49,7 +49,7 @@
     cert: certificate
   });
 
-  app.use(bodyParser());
+  app.use(bodyParser({limit: '50mb'}));
 
   error_types = ['NotRegistered', 'MismatchSenderId'];
 
@@ -83,15 +83,15 @@
     } else {
       origin_addr = req.connection.remoteAddress;
     }
-    trace(x, "Originator: " + origin_addr);
-    trace(x, "Accepted " + idcount + " regids. " + failed + " should fail and " + passed + " should pass.");
+//    trace(x, "Originator: " + origin_addr);
+//    trace(x, "Accepted " + idcount + " regids. " + failed + " should fail and " + passed + " should pass.");
     if (req.body.collapse_key) {
-      trace(x, "Collapse key: [" + req.body.collapse_key + "]");
+//      trace(x, "Collapse key: [" + req.body.collapse_key + "]");
     }
     if (req.body.data) {
-      trace(x, "Data ===");
-      trace(x, "" + (JSON.stringify(req.body.data)));
-      trace(x, "========");
+//      trace(x, "Data ===");
+//      trace.log(x, "" + (JSON.stringify(req.body.data)));
+//      trace(x, "========");
     }
     data = {
       multicast_id: Math.random() * 1e19,
