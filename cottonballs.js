@@ -83,6 +83,7 @@
     } else {
       origin_addr = req.connection.remoteAddress;
     }
+//    console.log(req.body)
 //    trace(x, "Originator: " + origin_addr);
 //    trace(x, "Accepted " + idcount + " regids. " + failed + " should fail and " + passed + " should pass.");
     if (req.body.collapse_key) {
@@ -121,7 +122,10 @@
         statsLine +=  " "+ reqPerSec+" req/s  rate: " +rate+" tokens per sec  ---- duration:" + duration
 
       }
+
       console.log(statsLine);
+
+
       //trace(x, "Sending out data.");
       return res.send(data);
     };
@@ -129,8 +133,11 @@
       trace(x, "Simulate: Crashing.");
       return res.send(500, "");
     } else if (program.latency > 0) {
+      // SEBC fix make sure we are talking  int here
+      program.latency = parseInt(program.latency,10);
+      program.latencyFlux = parseInt(program.latencyFlux,10);
       latency = program.latency + (Math.floor(Math.random() * program.latencyFlux));
-      trace(x, "Simulate: Latency of " + latency + "ms.");
+//      console.log(x, "Simulate: Latency of " + latency + "ms.");
       return setTimeout(cb, latency);
     } else {
       return cb();
